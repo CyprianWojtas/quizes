@@ -1,0 +1,116 @@
+html
+{
+	font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body
+{
+	max-width: 300rem;
+	background: #222;
+	color: #FFF;
+}
+
+.question
+{
+	margin: auto;
+	width: 40%;
+}
+
+.answerHistory
+{
+  height: 1rem;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transition-duration: 0.2s;
+}
+.question.answered .answerHistory
+{
+	opacity: 1;
+}
+
+.answerHistory div
+{
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+  background: #080;
+  box-shadow: 0 0 0.5rem #0002;
+  border-radius: 0.25rem;
+}
+.answerHistory .wrong
+{
+  background: #B00;
+}
+
+.answers
+{
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0.5rem;
+}
+.answers .answer
+{
+	padding: 1rem;
+	border: none;
+	background: #333;
+	color: inherit;
+	box-shadow: 0 0 0.5rem #0002;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: inherit;
+	/* font-weight: bold; */
+	transition-duration: 0.2s;
+	border-radius: 0.25rem;
+}
+.answers .answer:hover,
+.answers .answer:active
+{
+	background: #444;
+}
+
+.question.answered .answers .answer
+{
+	cursor: default;
+}
+.question.answered .answers .answer:hover,
+.question.answered .answers .answer:active
+{
+	background: #333;
+}
+
+.answer.correct
+{
+	background: #050 !important;
+}
+.answer.selected.correct
+{
+	background: #080 !important;
+}
+.answer.wrong
+{
+	background: #B00 !important;
+}
+
+.question .next
+{
+	margin-left: auto;
+	background: #059;
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	font-weight: bold;
+	border: none;
+	margin-top: 0.5rem;
+	padding: 1rem 3rem;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 0.5rem #0002;
+	cursor: pointer;
+	display: none;
+}
+
+.question.answered .next
+{
+	display: block;
+}

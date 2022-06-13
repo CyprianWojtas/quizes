@@ -1,0 +1,72 @@
+{
+	"title": "Example Quiz",
+	"questions":
+	[
+		{
+			"text": "What is 2 + 2?",
+			"answers":
+			[
+				{
+					"text": "4",
+					"correct": true
+				},
+				{
+					"text": "🍆",
+					"correct": false
+				},
+				{
+					"text": "Frying pan",
+					"correct": false
+				},
+				{
+					"text": "ln(e^4)",
+					"correct": true
+				}
+			]
+		},
+		{
+			"text": "!false ==",
+			"answers":
+			[
+				{
+					"text": "true",
+					"correct": true
+				},
+				{
+					"text": "Kebab",
+					"correct": true
+				},
+				{
+					"text": "🍦",
+					"correct": true
+				},
+				{
+					"text": "1",
+					"correct": true
+				}
+			]
+		},
+		{
+			"text": "Please, choose the answer 'stick'",
+			"answers":
+			[
+				{
+					"text": "hummingbird",
+					"correct": false
+				},
+				{
+					"text": "Kebab",
+					"correct": false
+				},
+				{
+					"text": "stick",
+					"correct": true
+				},
+				{
+					"text": "Ogres are like onions.",
+					"correct": false
+				}
+			]
+		}
+	]
+}
