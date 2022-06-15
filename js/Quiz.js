@@ -13,7 +13,7 @@ class Quiz
 	{
 		let thisQuiz = this.getFromStorage();
 		
-		if (forceReload)
+		if (forceReload || !thisQuiz)
 		{
 			thisQuiz = await this.reloadQuiz();
 			this.updateStorage(thisQuiz);
@@ -33,7 +33,7 @@ class Quiz
 
 		let quizes = JSON.parse(localStorage.getItem("quizes") || "{}");
 
-		this.quizId = quizes[this.url] || Object.keys(quizes).length;
+		this.quizId = quizes[this.url] || Object.keys(quizes).length + 1;
 
 		if (!quizes[this.url])
 		{
@@ -50,7 +50,7 @@ class Quiz
 	{
 		let quizes = JSON.parse(localStorage.getItem("quizes") || "{}");
 		this.quizId = quizes[this.url];
-		return JSON.parse(localStorage.getItem(`quiz_${this.quizId}`) || "{}");
+		return JSON.parse(localStorage.getItem(`quiz_${this.quizId}`) || "null");
 	}
 
 	updateStorage(thisQuiz)
@@ -104,6 +104,7 @@ class Quiz
 	selectQuestion()
 	{
 		this.rearrangeQuestions();
+		this.questions.reverse();
 
 		if (Math.random() < 0.5)
 		{

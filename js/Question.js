@@ -18,8 +18,9 @@ class Quiestion
 		this.containerEl.classList.add("question");
 
 		const textEl = document.createElement("h2");
-		textEl.classList.add("text");
-		textEl.append(this.text);
+		textEl.classList.add("questionText");
+		// TODO: safer html insertion method
+		textEl.innerHTML = this.text;
 
 		this.answerHistoryEl = document.createElement("div");
 		this.answerHistoryEl.classList.add("answerHistory");
@@ -43,7 +44,8 @@ class Quiestion
 
 			answer.element = answerEl;
 
-			answerEl.append(answer.text);
+			// TODO: safer html insertion method
+			answerEl.innerHTML = answer.text;
 
 			answerEl.addEventListener("click", () => this.response(answer, i));
 

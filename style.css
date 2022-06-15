@@ -10,11 +10,9 @@ body
 	background: #222;
 	color: #FFF;
 }
-
-.question
+.questionText
 {
-	margin: auto;
-	width: 40%;
+	font-weight: normal;
 }
 
 .answerHistory
