@@ -1,4 +1,4 @@
-import Quiestion from "./Question.js";
+import Question from "./Question.js";
 
 export default
 class Quiz
@@ -23,7 +23,7 @@ class Quiz
 
 		for (let queston of thisQuiz.questions || [])
 		{
-			this.questions.push(new Quiestion(queston));
+			this.questions.push(new Question(queston));
 		}
 	}
 
@@ -33,11 +33,11 @@ class Quiz
 
 		let quizes = JSON.parse(localStorage.getItem("quizes") || "{}");
 
-		this.quizId = quizes[this.url] || Object.keys(quizes).length + 1;
+		this.quizId = quizes[this.url]?.id || Object.keys(quizes).length + 1;
 
 		if (!quizes[this.url])
 		{
-			quizes[this.url] = this.quizId;
+			quizes[this.url] = { id: this.quizId, title: quiz.title };
 			localStorage.setItem("quizes", JSON.stringify(quizes));
 		}
 
@@ -49,7 +49,7 @@ class Quiz
 	getFromStorage()
 	{
 		let quizes = JSON.parse(localStorage.getItem("quizes") || "{}");
-		this.quizId = quizes[this.url];
+		this.quizId = quizes[this.url]?.id;
 		return JSON.parse(localStorage.getItem(`quiz_${this.quizId}`) || "null");
 	}
 
@@ -71,17 +71,97 @@ class Quiz
 		localStorage.setItem(`quiz_${this.quizId}`, JSON.stringify(thisQuiz));
 	}
 
+	updateQuestionListEl()
+	{
+		this.questionListEl.innerHTML = "";
+		this.rearrangeQuestions("answerCount");
+
+		for (let question of this.questions)
+		{
+			const questionEl = document.createElement("div");
+
+			const textEl = document.createElement("h2");
+			textEl.classList.add("questionText");
+			// TODO: safer html insertion method
+			textEl.innerHTML = question.text;
+
+			const answerHistoryEl = document.createElement("div");
+			answerHistoryEl.classList.add("answerHistory");
+
+			for (let answerIndex of question.answerHistory.slice(-10))
+			{
+				const answerHistEl = document.createElement("div");
+				answerHistEl.classList.add(question.answers[answerIndex].correct ? "correct" : "wrong");
+				answerHistoryEl.append(answerHistEl);
+			}
+
+			questionEl.append(textEl, answerHistoryEl);
+
+			this.questionListEl.append(questionEl);
+		}
+	}
+
 	getHTML()
 	{
 		const containerEl = document.createElement("div");
+		containerEl.classList.add("quizInfo");
+		
+		const titleEl = document.createElement("h1");
+		titleEl.append(this.title);
+		
+		const urlEl = document.createElement("h3");
+		urlEl.append(this.url);
+
+		const startBtnEl = document.createElement("button");
+		startBtnEl.classList.add("startQuizBtn");
+		startBtnEl.append("Start Quiz")
+		startBtnEl.addEventListener("click", () =>
+		{
+			document.body.append(this.getQuestionEl());
+		});
+
+		this.questionListEl = document.createElement("div");
+		this.updateQuestionListEl();
+
+		const reloadDatabase = document.createElement("button");
+		reloadDatabase.classList.add("reloadDatabase");
+		reloadDatabase.append("Update quiz database");
+		reloadDatabase.addEventListener("click", async () =>
+		{
+			if(confirm("Are sure?\nThis gonna clear your answer history"))
+			{
+				let quiz = await this.reloadQuiz();
+				this.updateStorage(quiz);
+			}
+		});
+
+		containerEl.append(titleEl, urlEl, startBtnEl, this.questionListEl, reloadDatabase);
+
+		return containerEl;
+	}
+
+	getQuestionEl()
+	{
+		const containerEl = document.createElement("div");
 		containerEl.classList.add("quiz");
+
+		const closeButtonEl = document.createElement("button");
+		closeButtonEl.classList.add("closeBtn");
+		closeButtonEl.append("X");
+
+		closeButtonEl.addEventListener("click", () =>
+		{
+			this.updateQuestionListEl();
+			containerEl.remove();
+		});
+
 
 		const titleEl = document.createElement("h1");
 		titleEl.append(this.title);
 
 		this.questionEl = document.createElement("div");
 
-		containerEl.append(titleEl, this.questionEl);
+		containerEl.append(closeButtonEl, titleEl, this.questionEl);
 
 		this.showQuestion();
 		return containerEl;
@@ -97,26 +177,36 @@ class Quiz
 			this.showQuestion();
 		};
 
+		// @ts-ignore
 		this.questionEl.innerHTML = "";
+		// @ts-ignore
 		this.questionEl.append(question.getHTML());
 	}
 
 	selectQuestion()
 	{
-		this.rearrangeQuestions();
+		this.rearrangeQuestions(Math.random() > 0.5 ? "correctRate" : "answerCount");
 		this.questions.reverse();
 
-		if (Math.random() < 0.5)
+		if (Math.random() < 0.75)
 		{
-			return this.questions[Math.floor(Math.random() * Math.floor(this.questions.length / 15))];
+			return this.questions[Math.floor(Math.random() * Math.floor(this.questions.length / 10))];
 		}
 
 		return this.questions[Math.floor(Math.random() * this.questions.length)];
 	}
 
-	rearrangeQuestions()
+	rearrangeQuestions(method = "correctRate")
 	{
-		this.questions.sort((a, b) => b.correctRate - a.correctRate);
+		switch (method)
+		{
+			case "correctRate":
+				this.questions.sort((a, b) => b.correctRate - a.correctRate);
+				break;
+			case "answerCount":
+				this.questions.sort((a, b) => b.answerHistory.length - a.answerHistory.length);
+				break;
+		}
 	}
 
 	listQuestions()
@@ -125,7 +215,7 @@ class Quiz
 
 		for (let question of this.questions)
 		{
-			console.log(question.text, question.correctRate);
+			console.log(question.text, question.correctRate, question.answerHistory.length);
 		}
 	}
 }

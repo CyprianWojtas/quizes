@@ -9,7 +9,119 @@ body
 	max-width: 300rem;
 	background: #222;
 	color: #FFF;
+	display: grid;
+	margin: 0;
+	grid-template-columns: 20rem 1fr;
+	height: 100vh;
+	min-height: 100vh;
 }
+
+a
+{
+	color: #08F;
+}
+a:visited
+{
+	color: #C8F;
+}
+
+button
+{
+	background: #059;
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	border: none;
+	padding: 1rem 3rem;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 0.5rem #0002;
+	cursor: pointer;
+	transition-duration: 0.2s;
+}
+button:hover,
+button:active
+{
+	background: #06A;
+}
+
+
+#quizList,
+#quizInfo
+{
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 1rem;
+}
+
+#quizList
+{
+	background: #111;
+}
+
+@media (max-width: 40rem)
+{
+	body
+	{
+		grid-template-columns: 1fr;
+		height: auto;
+	}
+	#quizList,
+	#quizInfo
+	{
+		height: auto;
+	}
+}
+
+#quizInfo .questionText
+{
+	font-size: 1.25rem;
+	margin-bottom: 0.2rem;
+}
+
+.quizListItem
+{
+	color: #FFF !important;
+	text-decoration: none;
+	display: block;
+}
+
+.quizListItem h3
+{
+	margin-bottom: 0.2rem;
+}
+
+.quiz
+{
+	/* max-width: 120rem; */
+	background: #222;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 1rem;
+	/* margin: auto; */
+	z-index: 100;
+}
+
+.closeBtn
+{
+	float: right;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	background: #A00;
+	font-weight: bold;
+	line-height: 2rem;
+}
+.closeBtn:hover,
+.closeBtn:active
+{
+	background: #C00;
+}
+
 .questionText
 {
 	font-weight: normal;
@@ -19,8 +131,11 @@ body
 {
   height: 1rem;
   margin-bottom: 0.5rem;
-  opacity: 0;
   transition-duration: 0.2s;
+}
+.question .answerHistory
+{
+	opacity: 0;
 }
 .question.answered .answerHistory
 {
@@ -48,7 +163,8 @@ body
 	grid-template-columns: repeat(2, 1fr);
 	gap: 0.5rem;
 }
-@media (max-width: 720px)
+
+@media (max-width: 60rem)
 {
 	.answers
 	{
@@ -58,16 +174,7 @@ body
 .answers .answer
 {
 	padding: 1rem;
-	border: none;
 	background: #333;
-	color: inherit;
-	box-shadow: 0 0 0.5rem #0002;
-	cursor: pointer;
-	font-family: inherit;
-	font-size: inherit;
-	/* font-weight: bold; */
-	transition-duration: 0.2s;
-	border-radius: 0.25rem;
 }
 .answers .answer:hover,
 .answers .answer:active
@@ -101,21 +208,17 @@ body
 .question .next
 {
 	margin-left: auto;
-	background: #059;
-	color: inherit;
-	font-size: inherit;
-	font-family: inherit;
 	font-weight: bold;
-	border: none;
 	margin-top: 0.5rem;
-	padding: 1rem 3rem;
-	border-radius: 0.25rem;
-	box-shadow: 0 0 0.5rem #0002;
-	cursor: pointer;
 	display: none;
 }
 
 .question.answered .next
 {
 	display: block;
+}
+
+.reloadDatabase
+{
+	margin-top: 1rem;
 }

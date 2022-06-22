@@ -1,5 +1,5 @@
 export default
-class Quiestion
+class Question
 {
 	constructor(data)
 	{
@@ -71,8 +71,9 @@ class Quiestion
 
 		for (let answerIndex of this.answerHistory.slice(-10))
 		{
-			let answerHistEl = document.createElement("div");
+			const answerHistEl = document.createElement("div");
 			answerHistEl.classList.add(this.answers[answerIndex].correct ? "correct" : "wrong");
+			// @ts-ignore
 			this.answerHistoryEl.append(answerHistEl);
 		}
 
@@ -81,6 +82,7 @@ class Quiestion
 		
 		this.answered = true;
 		selectedAnswer.element.classList.add("selected", selectedAnswer.correct ? "correct" : "wrong");
+		// @ts-ignore
 		this.containerEl.classList.add("answered");
 
 		for (const answer of this.answers)
