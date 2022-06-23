@@ -156,6 +156,10 @@ button:active
 {
   background: #B00;
 }
+.answerHistory .uncertain
+{
+  background: #BA0;
+}
 
 .answers
 {
@@ -203,6 +207,16 @@ button:active
 .answer.wrong
 {
 	background: #B00 !important;
+}
+.answer.uncertain
+{
+  background: #BA0 !important;
+  color: #000;
+}
+.answer.selected.uncertain
+{
+	background: #DC0 !important;
+	color: #000;
 }
 
 .question .next

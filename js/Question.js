@@ -62,6 +62,16 @@ class Question
 		return this.containerEl;
 	}
 
+	checkAnswer(answerIndex)
+	{
+		if (this.answers[answerIndex].correct === true)
+			return "correct";
+		if (this.answers[answerIndex].correct === false)
+			return "wrong";
+		
+		return "uncertain";
+	}
+
 	response(selectedAnswer, index)
 	{
 		if (this.answered)
@@ -72,7 +82,8 @@ class Question
 		for (let answerIndex of this.answerHistory.slice(-10))
 		{
 			const answerHistEl = document.createElement("div");
-			answerHistEl.classList.add(this.answers[answerIndex].correct ? "correct" : "wrong");
+			answerHistEl.classList.add(this.checkAnswer(answerIndex));
+			
 			// @ts-ignore
 			this.answerHistoryEl.append(answerHistEl);
 		}
@@ -81,15 +92,19 @@ class Question
 			this.answerHistory.shift();
 		
 		this.answered = true;
-		selectedAnswer.element.classList.add("selected", selectedAnswer.correct ? "correct" : "wrong");
+		selectedAnswer.element.classList.add("selected", this.checkAnswer(index));
 		// @ts-ignore
 		this.containerEl.classList.add("answered");
 
-		for (const answer of this.answers)
+		for (let i in this.answers)
 		{
-			if (answer.correct)
+			const answer = this.answers[i];
+
+			const answerCheck = this.checkAnswer(i);
+
+			if (answerCheck != "wrong")
 			{
-				answer.element.classList.add("correct");
+				answer.element.classList.add(answerCheck);
 			}
 		}
 	}
@@ -97,14 +112,22 @@ class Question
 	get correctRate()
 	{
 		let rate = 0;
+		let count = this.answerHistory.length;
+
 		for (let answerIndex of this.answerHistory)
 		{
-			if (this.answers[answerIndex].correct)
-				rate++;
+			switch (this.checkAnswer(answerIndex))
+			{
+				case "correct":
+					rate++;
+					break;
+				case "uncertain":
+					count--;
+			}
 		}
 
-		if (this.answerHistory.length)
-			rate /= this.answerHistory.length;
+		if (count)
+			rate /= count;
 
 		return rate;
 	}

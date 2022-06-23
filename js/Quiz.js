@@ -91,7 +91,7 @@ class Quiz
 			for (let answerIndex of question.answerHistory.slice(-10))
 			{
 				const answerHistEl = document.createElement("div");
-				answerHistEl.classList.add(question.answers[answerIndex].correct ? "correct" : "wrong");
+				answerHistEl.classList.add(question.checkAnswer(answerIndex));
 				answerHistoryEl.append(answerHistEl);
 			}
 

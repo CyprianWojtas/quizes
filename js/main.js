@@ -11,8 +11,20 @@ function reloadQuizList()
 	for (let quizUrl of Object.keys(allQuizes))
 	{
 		let quiz = allQuizes[quizUrl];
-	
-		console.log(quizUrl, quiz);
+
+		// Fixing issue with prevous quiz list storage format
+		if (typeof quiz != "object")
+		{
+			let quizFull = JSON.parse(localStorage.getItem(`quiz_${ quiz }`) || "{}");
+			quiz =
+			{
+				id: quiz,
+				title: quizFull.title
+			};
+
+			allQuizes[quizUrl] = quiz;
+			localStorage.setItem("quizes", JSON.stringify(allQuizes));
+		}
 
 		const quizListItemEl = document.createElement("a");
 		quizListItemEl.classList.add("quizListItem");
