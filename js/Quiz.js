@@ -88,7 +88,7 @@ class Quiz
 			const answerHistoryEl = document.createElement("div");
 			answerHistoryEl.classList.add("answerHistory");
 
-			for (let answerIndex of question.answerHistory.slice(-10))
+			for (let answerIndex of question.answerHistory.slice(-16))
 			{
 				const answerHistEl = document.createElement("div");
 				answerHistEl.classList.add(question.checkAnswer(answerIndex));

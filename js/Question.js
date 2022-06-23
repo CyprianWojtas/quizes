@@ -79,7 +79,7 @@ class Question
 		
 		this.answerHistory.push(parseInt(index));
 
-		for (let answerIndex of this.answerHistory.slice(-10))
+		for (let answerIndex of this.answerHistory.slice(-16))
 		{
 			const answerHistEl = document.createElement("div");
 			answerHistEl.classList.add(this.checkAnswer(answerIndex));

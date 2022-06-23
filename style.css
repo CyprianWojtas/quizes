@@ -129,7 +129,7 @@ button:active
 
 .answerHistory
 {
-  height: 1rem;
+  height: 1.25rem;
   margin-bottom: 0.5rem;
   transition-duration: 0.2s;
 }
@@ -151,7 +151,27 @@ button:active
   background: #080;
   box-shadow: 0 0 0.5rem #0002;
   border-radius: 0.25rem;
+  vertical-align: middle;
 }
+.answerHistory div:nth-last-child(14)
+{
+	width: 0.75rem;
+	height: 0.75rem;
+	border-radius: 0.1875rem;
+}
+.answerHistory div:nth-last-child(15)
+{
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 0.125rem;
+}
+.answerHistory div:nth-last-child(16)
+{
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.0625rem;
+}
+
 .answerHistory .wrong
 {
   background: #B00;
@@ -210,7 +230,7 @@ button:active
 }
 .answer.uncertain
 {
-  background: #BA0 !important;
+  background: #980 !important;
   color: #000;
 }
 .answer.selected.uncertain

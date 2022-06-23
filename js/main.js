@@ -8,7 +8,11 @@ function reloadQuizList()
 	quizListEl.innerHTML = "";
 	let allQuizes = JSON.parse(localStorage.getItem("quizes") || "{}");
 
-	for (let quizUrl of Object.keys(allQuizes))
+	let allQuizesList = Object.keys(allQuizes);
+
+	allQuizesList.sort((a, b) => allQuizes[a].title == allQuizes[b].title ? 0 : allQuizes[a].title > allQuizes[b].title ? 1 : -1 );
+
+	for (let quizUrl of allQuizesList)
 	{
 		let quiz = allQuizes[quizUrl];
 
