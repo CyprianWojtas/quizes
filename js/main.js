@@ -46,10 +46,7 @@ reloadQuizList();
 async function loadQuiz()
 {
 	if (!location.hash.substring(1))
-	{
-		document.body.append("No quiz selected!");
 		return;
-	}
 
 	let quiz = new Quiz(location.hash.substring(1));
 
