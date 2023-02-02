@@ -114,6 +114,22 @@ class Question
 		let rate = 0;
 		let count = this.answerHistory.length;
 
+		let theBestAnswer = "wrong";
+
+		for (let i in this.answers)
+		{
+			const answerCheck = this.checkAnswer(i);
+
+			if (answerCheck != "wrong" && theBestAnswer == "wrong")
+				theBestAnswer = answerCheck;
+
+			if (answerCheck == "correct" && theBestAnswer == "uncertain")
+				theBestAnswer = answerCheck;
+		}
+
+		if (theBestAnswer == "wrong")
+			return 1;
+
 		for (let answerIndex of this.answerHistory)
 		{
 			switch (this.checkAnswer(answerIndex))
@@ -122,7 +138,10 @@ class Question
 					rate++;
 					break;
 				case "uncertain":
-					count--;
+					if (theBestAnswer == "uncertain")
+						rate++;
+					else
+						count--;
 			}
 		}
 
